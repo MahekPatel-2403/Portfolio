@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useId, useMemo, useState } from "react";
 import meWordmark from "./assets/me-wordmark.png";
 import {
   aboutParagraphs,
@@ -146,6 +146,86 @@ function HeroVisual({ pageId }) {
   return <HeroSignature />;
 }
 
+function DotMatrixBanner({ label }) {
+  const safeLabel = label.toUpperCase();
+  const svgId = useId();
+  const wordmarkWidth = 1320;
+  const wordmarkHeight = 260;
+  const gridPatternId = `${svgId}-grid`;
+  const textPatternId = `${svgId}-text`;
+  const wordmarkConfig = useMemo(
+    () => ({
+      "MAHEK PATEL": { fontSize: 176, letterSpacing: 4, textLength: 940 },
+      SYSTEMS: { fontSize: 194, letterSpacing: 4, textLength: 760 },
+      APPROACH: { fontSize: 184, letterSpacing: 3, textLength: 900 },
+      CONNECT: { fontSize: 194, letterSpacing: 4, textLength: 780 },
+    }),
+    []
+  );
+  const config = wordmarkConfig[safeLabel] ?? {
+    fontSize: 182,
+    letterSpacing: 4,
+    textLength: 860,
+  };
+
+  return (
+    <div className="footer-dot-banner" aria-label={`${label} dot matrix display`}>
+      <div className="footer-dot-stage">
+        <svg
+          className="footer-dot-wordmark"
+          viewBox={`0 0 ${wordmarkWidth} ${wordmarkHeight}`}
+          role="img"
+        >
+          <defs>
+            <pattern id={gridPatternId} width="12" height="12" patternUnits="userSpaceOnUse">
+              <circle className="footer-dot-grid-point" cx="6" cy="6" r="1.55" />
+            </pattern>
+            <pattern id={textPatternId} width="12" height="12" patternUnits="userSpaceOnUse">
+              <circle className="footer-dot-text-point" cx="6" cy="6" r="2.3" />
+            </pattern>
+          </defs>
+
+          <rect
+            className="footer-dot-grid"
+            fill={`url(#${gridPatternId})`}
+            height={wordmarkHeight}
+            width={wordmarkWidth}
+          />
+
+          <text
+            className="footer-dot-text-outline"
+            dominantBaseline="middle"
+            fontSize={config.fontSize}
+            lengthAdjust="spacingAndGlyphs"
+            letterSpacing={config.letterSpacing}
+            textAnchor="middle"
+            textLength={config.textLength}
+            x="50%"
+            y="55%"
+          >
+            {safeLabel}
+          </text>
+
+          <text
+            className="footer-dot-text-shape"
+            dominantBaseline="middle"
+            fill={`url(#${textPatternId})`}
+            fontSize={config.fontSize}
+            lengthAdjust="spacingAndGlyphs"
+            letterSpacing={config.letterSpacing}
+            textAnchor="middle"
+            textLength={config.textLength}
+            x="50%"
+            y="55%"
+          >
+            {safeLabel}
+          </text>
+        </svg>
+      </div>
+    </div>
+  );
+}
+
 function ListDivider({ item }) {
   return (
     <div className="list-divider">
@@ -273,15 +353,17 @@ function ConnectPage() {
         </div>
       </div>
 
-      <div className="contact-panel" id="connect-links">
-        {contactLinks.map((item) => (
-          <a
-            className={`contact-link${item.placeholder ? " placeholder-link" : ""}`}
-            href={item.href}
-            key={item.label}
-          >
-            <span>{item.label}</span>
-            <strong>{item.value}</strong>
+        <div className="contact-panel" id="connect-links">
+          {contactLinks.map((item) => (
+            <a
+              className={`contact-link${item.placeholder ? " placeholder-link" : ""}`}
+              href={item.href}
+              key={item.label}
+              rel={item.external ? "noreferrer" : undefined}
+              target={item.external ? "_blank" : undefined}
+            >
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
           </a>
         ))}
       </div>
@@ -289,14 +371,22 @@ function ConnectPage() {
   );
 }
 
-function Footer({ onNavigate }) {
+function Footer({ activeLabel, activePageId, onNavigate }) {
   return (
     <footer className="site-footer">
+      <DotMatrixBanner label={activeLabel} />
+
       <div className="footer-content">
         <div>
           <h1>Contact</h1>
           {footerContactLinks.map((item) => (
-            <a className="footer-link" href={item.href} key={`${item.title}-${item.subtitle}`}>
+            <a
+              className="footer-link"
+              href={item.href}
+              key={`${item.title}-${item.subtitle}`}
+              rel={item.external ? "noreferrer" : undefined}
+              target={item.external ? "_blank" : undefined}
+            >
               <span>{item.title}</span>
               <small>{item.subtitle}</small>
             </a>
@@ -307,13 +397,13 @@ function Footer({ onNavigate }) {
           <h1>Navigation</h1>
           {footerNavigationLinks.map((item) => (
             <button
-              className="footer-nav"
-              key={`${item.title}-${item.subtitle}`}
+              className={`footer-nav${activePageId === item.pageId ? " active" : ""}`}
+              key={`${item.title}-${item.pageId}`}
               type="button"
               onClick={() => onNavigate(item.pageId)}
             >
               <span>{item.title}</span>
-              <small>{item.subtitle}</small>
+              {item.subtitle ? <small>{item.subtitle}</small> : null}
             </button>
           ))}
         </div>
@@ -353,7 +443,7 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setStickyVisible(window.scrollY > window.innerHeight * 0.72);
+      setStickyVisible(window.scrollY > 32);
     };
 
     handleScroll();
@@ -411,7 +501,7 @@ export default function App() {
     <>
       <div className="site-noise" aria-hidden="true"></div>
 
-      <header className="site-header">
+      <header className={`site-header${stickyVisible && !navOpen ? " hidden" : ""}`}>
         <div className="nav-background" aria-hidden="true"></div>
 
         <button
@@ -465,8 +555,8 @@ export default function App() {
 
       <div className={`sticky-nav${stickyVisible ? " visible" : ""}`} aria-hidden="true">
         <div>
-          <small>Current Page</small>
-          <span>{activePage.title}</span>
+          <small>Name</small>
+          <span>Mahek Patel</span>
         </div>
         <div>
           <small>Availability</small>
@@ -514,7 +604,11 @@ export default function App() {
         </div>
       </main>
 
-      <Footer onNavigate={handleFooterNavigation} />
+      <Footer
+        activeLabel={activePage.marquee}
+        activePageId={activePage.id}
+        onNavigate={handleFooterNavigation}
+      />
     </>
   );
 }

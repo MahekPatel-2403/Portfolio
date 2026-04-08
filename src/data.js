@@ -189,40 +189,42 @@ export const contactDetails = [
 export const contactLinks = [
   {
     label: "Email",
-    value: "Add your email",
-    href: "#connect-links",
-    placeholder: true,
+    value: "mahekharivansh2008@gmail.com",
+    href: "mailto:mahekharivansh2008@gmail.com",
   },
   {
     label: "LinkedIn",
-    value: "Add your LinkedIn",
-    href: "#connect-links",
-    placeholder: true,
+    value: "linkedin.com/in/mahek-patel-0b368a332",
+    href: "https://www.linkedin.com/in/mahek-patel-0b368a332/",
+    external: true,
   },
   {
     label: "GitHub",
-    value: "Add your GitHub",
-    href: "#connect-links",
-    placeholder: true,
-  },
-  {
-    label: "Resume",
-    value: "Add your resume link",
-    href: "#connect-links",
-    placeholder: true,
+    value: "github.com/MahekPatel-2403",
+    href: "https://github.com/MahekPatel-2403",
+    external: true,
   },
 ];
 
 export const footerContactLinks = [
-  { title: "Email", subtitle: "Add your email", href: "#connect-links" },
-  { title: "LinkedIn", subtitle: "Add your profile", href: "#connect-links" },
-  { title: "GitHub", subtitle: "Add your repositories", href: "#connect-links" },
-  { title: "Resume", subtitle: "Add your resume link", href: "#connect-links" },
+  { title: "Email", subtitle: "mahekharivansh2008@gmail.com", href: "mailto:mahekharivansh2008@gmail.com" },
+  {
+    title: "LinkedIn",
+    subtitle: "linkedin.com/in/mahek-patel-0b368a332",
+    href: "https://www.linkedin.com/in/mahek-patel-0b368a332/",
+    external: true,
+  },
+  {
+    title: "GitHub",
+    subtitle: "github.com/MahekPatel-2403",
+    href: "https://github.com/MahekPatel-2403",
+    external: true,
+  },
 ];
 
 export const footerNavigationLinks = [
-  { title: "Mahek Patel", subtitle: "About and strengths", pageId: "about" },
-  { title: "Systems", subtitle: "Backend capabilities", pageId: "systems" },
-  { title: "Approach", subtitle: "How I like to work", pageId: "approach" },
-  { title: "Connect", subtitle: "Availability and links", pageId: "connect" },
+  { title: "Mahek Patel", pageId: "about" },
+  { title: "Systems", pageId: "systems" },
+  { title: "Approach", pageId: "approach" },
+  { title: "Connect", pageId: "connect" },
 ];
