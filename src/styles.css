@@ -314,10 +314,10 @@ main {
 .hero-centerpiece {
   position: absolute;
   left: 50%;
-  top: 54%;
-  width: min(64vw, 1040px);
+  top: 55%;
+  width: min(69vw, 1120px);
   aspect-ratio: 1.35 / 1;
-  transform: translate(-16%, -50%);
+  transform: translate(-10%, -50%);
   z-index: 2;
   pointer-events: none;
   display: grid;
@@ -331,15 +331,15 @@ main {
 
 .hero-center-grid {
   position: absolute;
-  inset: 18% 12%;
-  border: 1px solid rgba(143, 243, 219, 0.16);
-  border-radius: 38px;
+  inset: 18% 10%;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 44px;
   background:
-    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 34px 34px;
   box-shadow:
-    inset 0 0 120px rgba(143, 243, 219, 0.05),
+    inset 0 0 120px rgba(188, 204, 228, 0.05),
     0 0 100px rgba(8, 13, 28, 0.55);
 }
 
@@ -352,7 +352,7 @@ main {
 
 .hero-center-glow-one {
   inset: 18% 22% 12% 20%;
-  background: radial-gradient(circle, rgba(143, 243, 219, 0.25), rgba(143, 243, 219, 0));
+  background: radial-gradient(circle, rgba(244, 248, 255, 0.24), rgba(244, 248, 255, 0));
   animation: drift-one 11s ease-in-out infinite alternate;
 }
 
@@ -360,22 +360,21 @@ main {
   inset: 12% 18% auto auto;
   width: 24%;
   aspect-ratio: 1 / 1;
-  background: radial-gradient(circle, rgba(187, 164, 255, 0.42), rgba(187, 164, 255, 0));
+  background: radial-gradient(circle, rgba(164, 184, 214, 0.34), rgba(164, 184, 214, 0));
   animation: drift-two 12s ease-in-out infinite alternate;
 }
 
 .monogram-3d {
   position: relative;
-  width: min(64vw, 1040px);
-  aspect-ratio: 2.35 / 0.88;
+  width: min(69vw, 1120px);
+  aspect-ratio: 2.8 / 0.92;
   transform-style: preserve-3d;
   perspective: 2200px;
-  animation:
-    monogram-revolve 18s linear infinite,
-    monogram-float 6s ease-in-out infinite;
+  transform: rotateX(18deg) rotateY(-17deg) rotateZ(-6deg);
+  animation: monogram-float 6.8s ease-in-out infinite;
   filter:
-    drop-shadow(0 26px 54px rgba(0, 0, 0, 0.48))
-    drop-shadow(0 0 36px rgba(255, 255, 255, 0.16));
+    drop-shadow(0 28px 58px rgba(0, 0, 0, 0.52))
+    drop-shadow(0 0 42px rgba(255, 255, 255, 0.18));
 }
 
 .monogram-3d::before,
@@ -385,10 +384,10 @@ main {
   inset: 0;
   display: grid;
   place-items: center;
-  font-family: "Allura", cursive;
-  font-size: clamp(7rem, 13.8vw, 13.8rem);
+  font-family: "Yellowtail", "Allura", cursive;
+  font-size: clamp(8rem, 14.8vw, 15.8rem);
   line-height: 0.84;
-  letter-spacing: -0.065em;
+  letter-spacing: -0.035em;
   white-space: nowrap;
   pointer-events: none;
 }
@@ -397,92 +396,96 @@ main {
   color: transparent;
   background:
     linear-gradient(
-      106deg,
-      rgba(255, 255, 255, 0) 18%,
-      rgba(255, 255, 255, 0.9) 27%,
-      rgba(255, 255, 255, 0) 35%,
-      rgba(255, 255, 255, 0) 54%,
-      rgba(255, 255, 255, 0.75) 63%,
-      rgba(255, 255, 255, 0) 72%
+      108deg,
+      rgba(255, 255, 255, 0) 10%,
+      rgba(255, 255, 255, 0.97) 21%,
+      rgba(255, 255, 255, 0.2) 32%,
+      rgba(255, 255, 255, 0) 44%,
+      rgba(255, 255, 255, 0.88) 57%,
+      rgba(255, 255, 255, 0) 70%
     );
-  background-size: 220% 100%;
+  background-size: 230% 100%;
   -webkit-background-clip: text;
   background-clip: text;
-  opacity: 0.92;
+  opacity: 0.94;
   mix-blend-mode: screen;
-  transform: translateZ(28px);
-  animation: chrome-sheen 4.8s ease-in-out infinite;
+  transform: translate3d(-2px, -8px, 32px);
+  animation: chrome-sheen 5.2s ease-in-out infinite;
 }
 
 .monogram-3d::after {
-  color: rgba(38, 36, 34, 0.38);
+  color: rgba(24, 26, 31, 0.56);
   text-shadow:
-    0 0 1px rgba(255, 255, 255, 0.18),
-    0 34px 34px rgba(0, 0, 0, 0.34);
-  transform: translateY(18px) translateZ(-46px) scale(1.01);
-  filter: blur(1.2px);
-  opacity: 0.72;
+    0 0 1px rgba(255, 255, 255, 0.14),
+    0 40px 42px rgba(0, 0, 0, 0.38);
+  transform: translate3d(18px, 26px, -72px) scale(1.02);
+  filter: blur(3px);
+  opacity: 0.78;
 }
 
 .monogram-layer {
   inset: 0;
   display: grid;
   place-items: center;
-  font-family: "Allura", cursive;
-  font-size: clamp(7rem, 13.8vw, 13.8rem);
+  font-family: "Yellowtail", "Allura", cursive;
+  font-size: clamp(8rem, 14.8vw, 15.8rem);
   line-height: 0.84;
-  letter-spacing: -0.065em;
+  letter-spacing: -0.035em;
   transform:
-    translateZ(calc((13 - var(--layer-index)) * -3px))
-    translateX(calc(var(--layer-index) * 0.7px))
-    translateY(calc(var(--layer-index) * 0.95px));
+    translateZ(calc((17 - var(--layer-index)) * -3px))
+    translateX(calc(var(--layer-index) * 0.75px))
+    translateY(calc(var(--layer-index) * 1.1px));
   user-select: none;
   white-space: nowrap;
 }
 
 .monogram-layer:nth-child(n + 2) {
-  color: rgba(96, 92, 89, 0.98);
+  color: rgba(116, 124, 136, 0.98);
   text-shadow:
-    0 0 2px rgba(255, 255, 255, 0.06),
-    0 0 14px rgba(0, 0, 0, 0.22);
+    0 0 2px rgba(255, 255, 255, 0.05),
+    0 0 14px rgba(0, 0, 0, 0.18);
 }
 
 .monogram-layer:nth-child(odd):not(:first-child) {
-  color: rgba(124, 118, 113, 0.94);
+  color: rgba(90, 98, 109, 0.96);
+}
+
+.monogram-layer:nth-last-child(-n + 4) {
+  color: rgba(63, 69, 77, 0.98);
 }
 
 .monogram-layer:nth-child(1) {
   background:
     linear-gradient(
-      116deg,
-      #3f3d3b 0%,
-      #f8f7f4 8%,
-      #8d8883 15%,
-      #ffffff 24%,
-      #625e59 31%,
-      #f5f4f1 39%,
-      #7d7873 47%,
-      #ffffff 55%,
-      #464340 63%,
-      #faf9f7 71%,
-      #918b85 80%,
-      #ffffff 88%,
-      #5a5651 100%
+      112deg,
+      #373c45 0%,
+      #cfd4dc 8%,
+      #fdfefe 16%,
+      #8d95a0 24%,
+      #eff3f8 31%,
+      #6b7380 40%,
+      #ffffff 48%,
+      #9aa2ae 57%,
+      #f7f9fb 66%,
+      #5f6773 75%,
+      #ffffff 84%,
+      #8a929d 92%,
+      #444a54 100%
     );
-  background-size: 230% 230%;
+  background-size: 300% 220%;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
-  -webkit-text-stroke: 1.4px rgba(255, 255, 255, 0.28);
+  -webkit-text-stroke: 1.8px rgba(255, 255, 255, 0.34);
   text-shadow:
-    0 0 1px rgba(255, 255, 255, 0.82),
-    0 0 24px rgba(255, 255, 255, 0.16),
-    0 22px 40px rgba(0, 0, 0, 0.34);
-  animation: chrome-shift 7s linear infinite;
+    0 0 1px rgba(255, 255, 255, 0.88),
+    0 0 22px rgba(255, 255, 255, 0.14),
+    0 26px 54px rgba(0, 0, 0, 0.34);
+  animation: chrome-shift 8s linear infinite;
 }
 
 .monogram-layer:nth-child(2) {
-  color: rgba(225, 221, 217, 0.92);
+  color: rgba(239, 243, 247, 0.94);
 }
 
 .hero-grid {
@@ -1058,11 +1061,11 @@ main {
 @keyframes monogram-float {
   0%,
   100% {
-    translate: 0 0;
+    transform: rotateX(18deg) rotateY(-17deg) rotateZ(-6deg) translate3d(0, 0, 0);
   }
 
   50% {
-    translate: 0 -10px;
+    transform: rotateX(16deg) rotateY(-13deg) rotateZ(-4deg) translate3d(0, -10px, 0);
   }
 }
 
@@ -1096,8 +1099,8 @@ main {
   }
 
   .hero-centerpiece {
-    width: min(72vw, 860px);
-    transform: translate(-8%, -50%);
+    width: min(76vw, 900px);
+    transform: translate(-4%, -50%);
   }
 
   .system-card {
@@ -1208,7 +1211,12 @@ main {
   }
 
   .monogram-layer {
-    font-size: clamp(5.8rem, 19vw, 8.2rem);
+    font-size: clamp(6.4rem, 21vw, 9.2rem);
+  }
+
+  .monogram-3d::before,
+  .monogram-3d::after {
+    font-size: clamp(6.4rem, 21vw, 9.2rem);
   }
 
   .mobile-only-row {

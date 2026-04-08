@@ -1,34 +1,63 @@
 export const navItems = [
   {
-    id: "profile",
+    id: "about",
     number: "01",
-    title: "Profile",
-    subcategories: ["Overview", "Strengths"],
+    title: "Mahek Patel",
+    marquee: "MAHEK PATEL",
+    description:
+      "Information about me, my backend focus, and the kind of engineering work I enjoy most.",
+    subcategories: [
+      { label: "About", anchor: "about-intro" },
+      { label: "Strengths", anchor: "about-strengths" },
+    ],
   },
   {
     id: "systems",
     number: "02",
     title: "Systems",
-    subcategories: ["APIs", "Events"],
+    marquee: "SYSTEMS",
+    description:
+      "API platforms, event-driven workflows, and observability patterns designed for calm scale.",
+    subcategories: [
+      { label: "APIs", anchor: "systems-apis" },
+      { label: "Events", anchor: "systems-events" },
+    ],
   },
   {
     id: "approach",
     number: "03",
     title: "Approach",
-    subcategories: ["Reliability", "Delivery"],
+    marquee: "APPROACH",
+    description:
+      "How I think about reliability, documentation, delivery, and staying simple before clever.",
+    subcategories: [
+      { label: "Principles", anchor: "approach-principles" },
+      { label: "Delivery", anchor: "approach-delivery" },
+    ],
   },
   {
     id: "connect",
     number: "04",
     title: "Connect",
-    subcategories: ["India", "Availability"],
+    marquee: "CONNECT",
+    description:
+      "Availability, preferred scope, and the cleanest way to turn this concept into a real portfolio.",
+    subcategories: [
+      { label: "Availability", anchor: "connect-availability" },
+      { label: "Links", anchor: "connect-links" },
+    ],
   },
 ];
 
 export const heroMeta = [
-  { label: "Role", value: "Backend Engineer" },
+  { label: "Availability", value: "Available Today" },
   { label: "Location", value: "India" },
-  { label: "Focus", value: "APIs, Events, Reliability" },
+];
+
+export const aboutParagraphs = [
+  "I build backend platforms that keep product experiences fast, stable, and understandable. The work I enjoy most sits at the intersection of architecture, API design, async processing, and delivery discipline.",
+  "My preference is always for systems with clear edges: services that are easy to reason about, contracts that are explicit, and operational tooling that helps teams understand what is happening without guesswork.",
+  "When requirements are messy, I like turning them into backend flows that feel calmer on the other side. That usually means cleaner boundaries, stronger data ownership, and better visibility into how the system behaves in production.",
 ];
 
 export const profileStats = [
@@ -71,6 +100,7 @@ export const focusAreas = [
 export const systems = [
   {
     number: "01",
+    anchor: "systems-apis",
     title: "API Platforms",
     kicker: "Contracts / Auth / Scale",
     description:
@@ -81,6 +111,7 @@ export const systems = [
   },
   {
     number: "02",
+    anchor: "systems-events",
     title: "Event Workflows",
     kicker: "Queues / Retries / Consistency",
     description:
@@ -91,6 +122,7 @@ export const systems = [
   },
   {
     number: "03",
+    anchor: "systems-observability",
     title: "Data and Visibility",
     kicker: "Storage / Metrics / Tracing",
     description:
@@ -147,28 +179,50 @@ export const playbookItems = [
   },
 ];
 
+export const contactDetails = [
+  { label: "Role", value: "Backend Engineer" },
+  { label: "Availability", value: "Open to backend-focused freelance and full-time work" },
+  { label: "Timezone", value: "IST (UTC+5:30)" },
+  { label: "Best Fit", value: "APIs, data flows, platform reliability, delivery cleanup" },
+];
+
 export const contactLinks = [
-  { label: "Name", value: "Mahek Patel", href: "#top" },
-  { label: "Role", value: "Backend Engineer", href: "#profile" },
-  { label: "Location", value: "India", href: "#connect" },
   {
-    label: "Contact",
-    value: "Add email / LinkedIn / GitHub",
-    href: "#connect",
+    label: "Email",
+    value: "Add your email",
+    href: "#connect-links",
+    placeholder: true,
+  },
+  {
+    label: "LinkedIn",
+    value: "Add your LinkedIn",
+    href: "#connect-links",
+    placeholder: true,
+  },
+  {
+    label: "GitHub",
+    value: "Add your GitHub",
+    href: "#connect-links",
+    placeholder: true,
+  },
+  {
+    label: "Resume",
+    value: "Add your resume link",
+    href: "#connect-links",
     placeholder: true,
   },
 ];
 
 export const footerContactLinks = [
-  { title: "Profile", subtitle: "Mahek Patel, India", href: "#connect" },
-  { title: "Systems", subtitle: "Backend capabilities", href: "#systems" },
-  { title: "Approach", subtitle: "How I like to work", href: "#approach" },
-  { title: "Connect", subtitle: "Ready for real links", href: "#connect" },
+  { title: "Email", subtitle: "Add your email", href: "#connect-links" },
+  { title: "LinkedIn", subtitle: "Add your profile", href: "#connect-links" },
+  { title: "GitHub", subtitle: "Add your repositories", href: "#connect-links" },
+  { title: "Resume", subtitle: "Add your resume link", href: "#connect-links" },
 ];
 
 export const footerNavigationLinks = [
-  { title: "Profile", subtitle: "Overview and strengths", href: "#profile" },
-  { title: "Systems", subtitle: "What I build", href: "#systems" },
-  { title: "Approach", subtitle: "How I think", href: "#approach" },
-  { title: "Connect", subtitle: "Location and contact area", href: "#connect" },
+  { title: "Mahek Patel", subtitle: "About and strengths", pageId: "about" },
+  { title: "Systems", subtitle: "Backend capabilities", pageId: "systems" },
+  { title: "Approach", subtitle: "How I like to work", pageId: "approach" },
+  { title: "Connect", subtitle: "Availability and links", pageId: "connect" },
 ];

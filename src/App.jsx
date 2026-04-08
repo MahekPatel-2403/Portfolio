@@ -1,25 +1,19 @@
 import { useEffect, useMemo, useState } from "react";
+import meWordmark from "./assets/me-wordmark.png";
 import {
+  aboutParagraphs,
   approachCards,
+  contactDetails,
   contactLinks,
-  focusAreas,
   footerContactLinks,
   footerNavigationLinks,
   heroMeta,
+  focusAreas,
   navItems,
   playbookItems,
   profileStats,
   systems,
 } from "./data";
-
-function SectionDivider({ item }) {
-  return (
-    <div className="section-divider" id={`${item.id}-divider`}>
-      <p>{item.number}</p>
-      <h2>{item.title}</h2>
-    </div>
-  );
-}
 
 function HeroMarquee({ label }) {
   const rows = [
@@ -54,22 +48,37 @@ function HeroMarquee({ label }) {
   );
 }
 
-function HeroMonogram({ text }) {
-  const layers = Array.from({ length: 14 });
+function HeroSignature() {
+  return (
+    <div className="hero-visual-frame hero-visual-frame-signature" aria-hidden="true">
+      <div className="hero-signature-image-wrap">
+        <div className="hero-signature-rotator">
+          <img className="hero-signature-image hero-signature-image-front" src={meWordmark} alt="" />
+          <img className="hero-signature-image hero-signature-image-back" src={meWordmark} alt="" />
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function HeroSystemsVisual() {
+  const nodes = [
+    { label: "API", className: "system-node-api" },
+    { label: "QUEUE", className: "system-node-queue" },
+    { label: "DB", className: "system-node-db" },
+    { label: "TRACE", className: "system-node-trace" },
+  ];
 
   return (
-    <div className="hero-centerpiece" aria-hidden="true">
-      <div className="hero-center-glow hero-center-glow-one"></div>
-      <div className="hero-center-glow hero-center-glow-two"></div>
-      <div className="hero-center-grid"></div>
-      <div className="monogram-3d" data-text={text}>
-        {layers.map((_, index) => (
-          <span
-            key={`${text}-${index}`}
-            className="monogram-layer"
-            style={{ "--layer-index": index }}
-          >
-            {text}
+    <div className="hero-visual-frame" aria-hidden="true">
+      <div className="hero-visual-grid"></div>
+      <div className="systems-hero">
+        <span className="system-line system-line-one"></span>
+        <span className="system-line system-line-two"></span>
+        <span className="system-line system-line-three"></span>
+        {nodes.map((node) => (
+          <span className={`system-node ${node.className}`} key={node.label}>
+            {node.label}
           </span>
         ))}
       </div>
@@ -77,24 +86,262 @@ function HeroMonogram({ text }) {
   );
 }
 
+function HeroApproachVisual() {
+  const cards = ["Reliable", "Simple", "Visible"];
+
+  return (
+    <div className="hero-visual-frame" aria-hidden="true">
+      <div className="hero-visual-grid"></div>
+      <div className="approach-hero">
+        {cards.map((card, index) => (
+          <div className={`approach-hero-card approach-hero-card-${index + 1}`} key={card}>
+            <small>0{index + 1}</small>
+            <strong>{card}</strong>
+            <span>Engineering decisions with calm edges and clean tradeoffs.</span>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function HeroConnectVisual() {
+  const chips = [
+    { label: "EMAIL", className: "contact-chip-email" },
+    { label: "LINKEDIN", className: "contact-chip-linkedin" },
+    { label: "GITHUB", className: "contact-chip-github" },
+    { label: "INDIA", className: "contact-chip-india" },
+  ];
+
+  return (
+    <div className="hero-visual-frame" aria-hidden="true">
+      <div className="hero-visual-grid"></div>
+      <div className="connect-hero">
+        <div className="orbit orbit-one"></div>
+        <div className="orbit orbit-two"></div>
+        <div className="orbit-center"></div>
+        {chips.map((chip) => (
+          <span className={`contact-chip ${chip.className}`} key={chip.label}>
+            {chip.label}
+          </span>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function HeroVisual({ pageId }) {
+  if (pageId === "systems") {
+    return <HeroSystemsVisual />;
+  }
+
+  if (pageId === "approach") {
+    return <HeroApproachVisual />;
+  }
+
+  if (pageId === "connect") {
+    return <HeroConnectVisual />;
+  }
+
+  return <HeroSignature />;
+}
+
+function ListDivider({ item }) {
+  return (
+    <div className="list-divider">
+      <p>{item.number}</p>
+      <h2>{item.title}</h2>
+    </div>
+  );
+}
+
+function AboutPage() {
+  return (
+    <div className="category-body-split page-shell">
+      <div className="about-copy" id="about-intro">
+        <h1>I build backend systems that stay calm under real product pressure.</h1>
+        {aboutParagraphs.map((paragraph) => (
+          <p key={paragraph}>{paragraph}</p>
+        ))}
+      </div>
+
+      <div className="about-sidebar" id="about-strengths">
+        <div className="stats-grid">
+          {profileStats.map((item) => (
+            <div className="stat-card" key={item.title}>
+              <strong>{item.title}</strong>
+              <span>{item.description}</span>
+            </div>
+          ))}
+        </div>
+
+        <div className="focus-table">
+          <div className="focus-row focus-header">
+            <span>Now</span>
+            <span>Focus Area</span>
+            <span>Outcome</span>
+          </div>
+          {focusAreas.map((item) => (
+            <div className="focus-row" key={item.number}>
+              <span>{item.number}</span>
+              <span>{item.area}</span>
+              <span>{item.outcome}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function SystemsPage() {
+  return (
+    <div className="category-body page-shell">
+      <div className="list-container">
+        {systems.map((system) => (
+          <article className="system-card" id={system.anchor} key={system.number}>
+            <div className="system-index">{system.number}</div>
+            <div className="system-copy">
+              <div className="system-header">
+                <h3>{system.title}</h3>
+                <span>{system.kicker}</span>
+              </div>
+              <p>{system.description}</p>
+              <div className="tag-row">
+                {system.tags.map((tag) => (
+                  <span className="tag-pill" key={`${system.number}-${tag}`}>
+                    {tag}
+                  </span>
+                ))}
+              </div>
+            </div>
+            <div className={`system-visual ${system.visualClassName}`}>
+              {system.visualLabels.map((label) => (
+                <span key={`${system.number}-${label}`}>{label}</span>
+              ))}
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ApproachPage() {
+  return (
+    <div className="category-body-split page-shell">
+      <div className="approach-grid" id="approach-principles">
+        {approachCards.map((item) => (
+          <article className="approach-card" key={item.number}>
+            <small>{item.number}</small>
+            <h3>{item.title}</h3>
+            <p>{item.description}</p>
+          </article>
+        ))}
+      </div>
+
+      <div className="playbook" id="approach-delivery">
+        {playbookItems.map((item) => (
+          <div className="playbook-row" key={item.label}>
+            <span>{item.label}</span>
+            <p>{item.text}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function ConnectPage() {
+  return (
+    <div className="category-body-split page-shell">
+      <div className="connect-copy" id="connect-availability">
+        <h1>Open to meaningful backend engineering work from India.</h1>
+        <p>
+          If you need APIs, service design, or event-driven systems that feel
+          dependable instead of chaotic, this portfolio is set up to present
+          that work in a cleaner, more editorial format.
+        </p>
+
+        <div className="detail-table">
+          {contactDetails.map((item) => (
+            <div className="detail-row" key={item.label}>
+              <span>{item.label}</span>
+              <strong>{item.value}</strong>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="contact-panel" id="connect-links">
+        {contactLinks.map((item) => (
+          <a
+            className={`contact-link${item.placeholder ? " placeholder-link" : ""}`}
+            href={item.href}
+            key={item.label}
+          >
+            <span>{item.label}</span>
+            <strong>{item.value}</strong>
+          </a>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function Footer({ onNavigate }) {
+  return (
+    <footer className="site-footer">
+      <div className="footer-content">
+        <div>
+          <h1>Contact</h1>
+          {footerContactLinks.map((item) => (
+            <a className="footer-link" href={item.href} key={`${item.title}-${item.subtitle}`}>
+              <span>{item.title}</span>
+              <small>{item.subtitle}</small>
+            </a>
+          ))}
+        </div>
+
+        <div className="navigation-container">
+          <h1>Navigation</h1>
+          {footerNavigationLinks.map((item) => (
+            <button
+              className="footer-nav"
+              key={`${item.title}-${item.subtitle}`}
+              type="button"
+              onClick={() => onNavigate(item.pageId)}
+            >
+              <span>{item.title}</span>
+              <small>{item.subtitle}</small>
+            </button>
+          ))}
+        </div>
+      </div>
+
+      <div className="footer-credit">
+        <p>Mahek Patel</p>
+        <small>Backend engineer portfolio, rebuilt in a category-first layout.</small>
+      </div>
+    </footer>
+  );
+}
+
 export default function App() {
-  const [activeSection, setActiveSection] = useState("profile");
-  const [hoveredSection, setHoveredSection] = useState(null);
+  const [activePageIndex, setActivePageIndex] = useState(0);
+  const [previewPageIndex, setPreviewPageIndex] = useState(null);
   const [navOpen, setNavOpen] = useState(false);
   const [stickyVisible, setStickyVisible] = useState(false);
-  const heroBackgroundWord = "MAHEK";
-  const heroMonogram = "mahek";
+  const [pendingAnchor, setPendingAnchor] = useState(null);
 
-  const sectionLookup = useMemo(
-    () =>
-      Object.fromEntries(
-        navItems.map((item) => [item.id, { title: item.title, label: item.title.toUpperCase() }])
-      ),
+  const displayedPageIndex = previewPageIndex ?? activePageIndex;
+  const activePage = navItems[activePageIndex];
+  const displayedPage = navItems[displayedPageIndex];
+
+  const pageLookup = useMemo(
+    () => Object.fromEntries(navItems.map((item, index) => [item.id, index])),
     []
   );
-
-  const displayedSection = hoveredSection ?? activeSection;
-  const displayedTitle = sectionLookup[displayedSection]?.title ?? "Profile";
 
   useEffect(() => {
     document.body.classList.toggle("nav-open", navOpen);
@@ -106,7 +353,7 @@ export default function App() {
 
   useEffect(() => {
     const handleScroll = () => {
-      setStickyVisible(window.scrollY > window.innerHeight * 0.42);
+      setStickyVisible(window.scrollY > window.innerHeight * 0.72);
     };
 
     handleScroll();
@@ -118,35 +365,46 @@ export default function App() {
   }, []);
 
   useEffect(() => {
-    const sections = document.querySelectorAll(".observed-section");
+    if (!pendingAnchor) {
+      return undefined;
+    }
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visibleEntry = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+    const timerId = window.setTimeout(() => {
+      const target = document.getElementById(pendingAnchor);
 
-        if (visibleEntry) {
-          setActiveSection(visibleEntry.target.id);
-        }
-      },
-      {
-        threshold: [0.35, 0.55, 0.75],
-        rootMargin: "-20% 0px -25% 0px",
+      if (target) {
+        target.scrollIntoView({ behavior: "smooth", block: "start" });
       }
-    );
 
-    sections.forEach((section) => observer.observe(section));
+      setPendingAnchor(null);
+    }, 80);
 
     return () => {
-      sections.forEach((section) => observer.unobserve(section));
-      observer.disconnect();
+      window.clearTimeout(timerId);
     };
-  }, []);
+  }, [activePageIndex, pendingAnchor]);
 
-  const closeMobileNav = () => {
+  const handlePageSelect = (pageIndex) => {
+    setActivePageIndex(pageIndex);
+    setPreviewPageIndex(null);
     setNavOpen(false);
-    setHoveredSection(null);
+    setPendingAnchor(null);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
+  const handleSubcategorySelect = (pageIndex, anchor) => {
+    setActivePageIndex(pageIndex);
+    setPreviewPageIndex(null);
+    setNavOpen(false);
+    setPendingAnchor(anchor);
+  };
+
+  const handleFooterNavigation = (pageId) => {
+    const targetIndex = pageLookup[pageId];
+
+    if (typeof targetIndex === "number") {
+      handlePageSelect(targetIndex);
+    }
   };
 
   return (
@@ -155,6 +413,7 @@ export default function App() {
 
       <header className="site-header">
         <div className="nav-background" aria-hidden="true"></div>
+
         <button
           className="nav-toggle"
           type="button"
@@ -167,228 +426,95 @@ export default function App() {
           <span></span>
         </button>
 
-        <nav className="nav-grid" id="site-nav" aria-label="Primary">
-          {navItems.map((item) => (
-            <a
+        <nav className={`nav-container${navOpen ? " open" : ""}`} id="site-nav" aria-label="Primary">
+          {navItems.map((item, index) => (
+            <div
+              className={`nav-item${
+                activePageIndex === index ? " active" : ""
+              }${displayedPageIndex === index ? " preview" : ""}`}
               key={item.id}
-              className={`nav-item${activeSection === item.id ? " active" : ""}`}
-              href={`#${item.id}`}
-              data-section={item.id}
-              onMouseEnter={() => setHoveredSection(item.id)}
-              onMouseLeave={() => setHoveredSection(null)}
-              onFocus={() => setHoveredSection(item.id)}
-              onBlur={() => setHoveredSection(null)}
-              onClick={closeMobileNav}
             >
-              <span className="nav-title">{item.title}</span>
-              {item.subcategories.map((subcategory) => (
-                <span className="nav-sub" key={`${item.id}-${subcategory}`}>
-                  {subcategory}
-                </span>
-              ))}
-            </a>
+              <button
+                className="nav-main"
+                type="button"
+                onMouseEnter={() => setPreviewPageIndex(index)}
+                onMouseLeave={() => setPreviewPageIndex(null)}
+                onFocus={() => setPreviewPageIndex(index)}
+                onBlur={() => setPreviewPageIndex(null)}
+                onClick={() => handlePageSelect(index)}
+              >
+                <span className="nav-title">{item.title}</span>
+              </button>
+
+              <div className="nav-sublist">
+                {item.subcategories.map((subcategory) => (
+                  <button
+                    className="nav-sub"
+                    key={`${item.id}-${subcategory.label}`}
+                    type="button"
+                    onClick={() => handleSubcategorySelect(index, subcategory.anchor)}
+                  >
+                    {subcategory.label}
+                  </button>
+                ))}
+              </div>
+            </div>
           ))}
         </nav>
       </header>
 
-      <div className={`sticky-bar${stickyVisible ? " visible" : ""}`} aria-hidden="true">
+      <div className={`sticky-nav${stickyVisible ? " visible" : ""}`} aria-hidden="true">
         <div>
-          <small>Current Section</small>
-          <span id="sticky-label">{displayedTitle}</span>
+          <small>Current Page</small>
+          <span>{activePage.title}</span>
         </div>
         <div>
-          <small>Role</small>
-          <span>Backend Engineer</span>
+          <small>Availability</small>
+          <span className="availability-dot">Available Today</span>
         </div>
       </div>
 
       <main>
-        <section className="hero" id="top" data-section="profile">
-          <HeroMarquee label={heroBackgroundWord} />
-          <HeroMonogram text={heroMonogram} />
+        <section className="morphing-hero" id="top">
+          <HeroMarquee label={displayedPage.marquee} />
 
-          <div className="hero-copy">
-            <p className="eyebrow">Mahek Patel</p>
-            <h1>
-              Backend engineer crafting calm, scalable systems for products that
-              need structure, speed, and resilience.
-            </h1>
-            <p className="hero-description">
-              I focus on backend architecture, API design, asynchronous
-              workflows, databases, and observability. Based in India, I like
-              building the reliable layers that help teams ship confidently.
-            </p>
+          <div
+            className={`morphing-hero-visual${
+              displayedPage.id === "about" ? " morphing-hero-visual-signature" : ""
+            }`}
+          >
+            <HeroVisual pageId={displayedPage.id} />
           </div>
 
-          <div className="hero-meta">
-            {heroMeta.map((item) => (
-              <div key={item.label}>
-                <small>{item.label}</small>
-                <span>{item.value}</span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <SectionDivider item={navItems[0]} />
-
-        <section className="section section-profile observed-section" id="profile">
-          <div className="profile-copy">
-            <p className="lead-copy">
-              I build backend platforms that keep product experiences fast,
-              stable, and understandable.
-            </p>
-            <p>
-              My work lives where product goals meet engineering discipline:
-              service boundaries, database design, async processing,
-              integrations, and operational clarity. I care about systems that
-              feel calm under load and stay easy to evolve as teams grow.
-            </p>
-            <p>
-              The parts I enjoy most are turning messy requirements into clean
-              backend contracts, designing flows that recover gracefully, and
-              leaving teams with better visibility into how their systems
-              behave.
-            </p>
-          </div>
-
-          <div className="profile-panel">
-            <h3>Core Strengths</h3>
-            <div className="stats-grid">
-              {profileStats.map((item) => (
-                <div className="stat-card" key={item.title}>
-                  <strong>{item.title}</strong>
-                  <span>{item.description}</span>
-                </div>
-              ))}
+          <div className={`hero-bottom${previewPageIndex !== null ? " dimmed" : ""}`}>
+            <div>
+              <small>{heroMeta[0].label}</small>
+              <span className="availability-dot">{heroMeta[0].value}</span>
             </div>
 
-            <div className="focus-table">
-              <div className="focus-row focus-header">
-                <span>Now</span>
-                <span>Focus Area</span>
-                <span>Outcome</span>
-              </div>
-              {focusAreas.map((item) => (
-                <div className="focus-row" key={item.number}>
-                  <span>{item.number}</span>
-                  <span>{item.area}</span>
-                  <span>{item.outcome}</span>
-                </div>
-              ))}
+            <div className="hero-mobile-description">
+              <small>Overview</small>
+              <span>{displayedPage.description}</span>
+            </div>
+
+            <div className="hero-bottom-right">
+              <small>{heroMeta[1].label}</small>
+              <span>{heroMeta[1].value}</span>
             </div>
           </div>
         </section>
 
-        <SectionDivider item={navItems[1]} />
+        <div key={activePage.id} className="page-group">
+          <ListDivider item={activePage} />
 
-        <section className="section section-systems observed-section" id="systems">
-          <div className="systems-list">
-            {systems.map((system) => (
-              <article className="system-card" key={system.number}>
-                <div className="system-index">{system.number}</div>
-                <div className="system-content">
-                  <div className="system-header">
-                    <h3>{system.title}</h3>
-                    <span>{system.kicker}</span>
-                  </div>
-                  <p>{system.description}</p>
-                  <div className="tag-row">
-                    {system.tags.map((tag) => (
-                      <span className="tag-pill" key={`${system.number}-${tag}`}>
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-                <div className={`system-visual ${system.visualClassName}`}>
-                  {system.visualLabels.map((label) => (
-                    <span key={`${system.number}-${label}`}>{label}</span>
-                  ))}
-                </div>
-              </article>
-            ))}
-          </div>
-        </section>
-
-        <SectionDivider item={navItems[2]} />
-
-        <section className="section section-approach observed-section" id="approach">
-          <div className="approach-grid">
-            {approachCards.map((item) => (
-              <article className="approach-card" key={item.number}>
-                <small>{item.number}</small>
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </article>
-            ))}
-          </div>
-
-          <div className="playbook">
-            {playbookItems.map((item) => (
-              <div className="playbook-row" key={item.label}>
-                <span>{item.label}</span>
-                <p>{item.text}</p>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <SectionDivider item={navItems[3]} />
-
-        <section className="section section-connect observed-section" id="connect">
-          <div className="connect-heading">
-            <h3>Open to meaningful backend engineering work from India.</h3>
-            <p>
-              If you need resilient APIs, better service design, or calmer
-              backend delivery, this site is ready to be extended with your real
-              contact links and project history.
-            </p>
-          </div>
-
-          <div className="contact-panel">
-            {contactLinks.map((item) => (
-              <a
-                className={`contact-link${item.placeholder ? " placeholder-link" : ""}`}
-                href={item.href}
-                key={item.label}
-              >
-                <span>{item.label}</span>
-                <strong>{item.value}</strong>
-              </a>
-            ))}
-          </div>
-        </section>
+          {activePage.id === "about" && <AboutPage />}
+          {activePage.id === "systems" && <SystemsPage />}
+          {activePage.id === "approach" && <ApproachPage />}
+          {activePage.id === "connect" && <ConnectPage />}
+        </div>
       </main>
 
-      <footer className="site-footer">
-        <div className="footer-content">
-          <div>
-            <h3>Contact</h3>
-            {footerContactLinks.map((item) => (
-              <a className="footer-link" href={item.href} key={`${item.title}-${item.subtitle}`}>
-                <span>{item.title}</span>
-                <small>{item.subtitle}</small>
-              </a>
-            ))}
-          </div>
-
-          <div className="footer-navigation">
-            <h3>Navigation</h3>
-            {footerNavigationLinks.map((item) => (
-              <a className="footer-nav" href={item.href} key={`${item.title}-${item.subtitle}`}>
-                <span>{item.title}</span>
-                <small>{item.subtitle}</small>
-              </a>
-            ))}
-          </div>
-        </div>
-
-        <div className="footer-credit">
-          <p>Mahek Patel</p>
-          <small>Backend Engineer Portfolio Concept</small>
-        </div>
-      </footer>
+      <Footer onNavigate={handleFooterNavigation} />
     </>
   );
 }
